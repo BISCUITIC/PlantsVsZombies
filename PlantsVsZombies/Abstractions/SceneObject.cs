@@ -6,8 +6,9 @@ namespace PlantsVsZombies.Abstractions;
 
 internal abstract class SceneObject : IUpdatable, IDrawable
 {
-    protected SceneObjectPosition _position;
     protected SceneContext _sceneContext;
+    protected SceneObjectPosition _position;
+    public SceneObjectPosition Position => _position;
 
     public SceneObject(SceneContext sceneContext, Vector2i position)
     {

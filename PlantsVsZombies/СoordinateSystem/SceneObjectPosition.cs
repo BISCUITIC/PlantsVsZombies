@@ -43,5 +43,6 @@ internal class SceneObjectPosition : Vector2i
     public SceneObjectPosition(Vector2i position, Vector2i maxValue)
         : this(position.X, position.Y, maxValue.X, maxValue.Y) { }
 
-
+    public static bool operator ==(SceneObjectPosition left, SceneObjectPosition right) { return left.X == right.X && left.Y == right.Y; }
+    public static bool operator !=(SceneObjectPosition left, SceneObjectPosition right) { return left.X != right.X && left.Y != right.Y; }
 }

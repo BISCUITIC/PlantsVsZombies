@@ -2,19 +2,23 @@
 using PlantsVsZombies.User;
 using PlantsVsZombies.СoordinateSystem;
 using PlantsVsZombies.Entities.Unites.Plants;
+using PlantsVsZombies.Entities.Unites.Plants.Types;
 
 namespace PlantsVsZombies.Game;
 
 internal class Scene : IUpdatable, IDrawable
 {
     private SceneContext _sceneContext;
+
     private Cursor _cursor;
     private PlayerInput _playerInput;
 
-    private PlacedPlants _plants;
+
     //private Map _map;
+
     //private BulletsPoll _bulletsPoll;
     //private ZombiesWave _zombiesWave;
+    //private PlacedPlants _plants;
 
     //private ScorePanel _scorePanle;
 
@@ -28,8 +32,7 @@ internal class Scene : IUpdatable, IDrawable
         _playerInput = new PlayerInput();
         _cursor = new Cursor(_sceneContext, Vector2i.Zero, _playerInput);
 
-        _plants = new PlacedPlants();
-        _plants.Add(new PeasShooter(_sceneContext, new Vector2i(5, 5)));
+        _sceneContext.Plants.Add(new PeasShooter(_sceneContext, new Vector2i(5, 5)));        
     }
 
     public void Update()
@@ -37,7 +40,7 @@ internal class Scene : IUpdatable, IDrawable
         _playerInput.Update();
         _cursor.Update();
 
-        _plants.Update();
+        _sceneContext.Update();        
     }
     public void Draw()
     {
@@ -45,7 +48,7 @@ internal class Scene : IUpdatable, IDrawable
         //DrawGameCommponents();
         _cursor.Draw();
 
-        _plants.Draw();
+        _sceneContext.Draw();        
     }
 
     /*private void DrawUICommponents()

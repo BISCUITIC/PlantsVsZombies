@@ -1,5 +1,4 @@
-﻿using PlantsVsZombies.Entities;
-using PlantsVsZombies.Game;
+﻿using PlantsVsZombies.Game;
 using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.СoordinateSystem;
 
@@ -18,11 +17,19 @@ namespace PlantsVsZombies.Entities.Unites
             }
         }
 
-        protected Unit(SceneContext sceneContext, Vector2i position) : base(sceneContext, position){ }
+        protected Unit(SceneContext sceneContext, Vector2i position, char symbol, int health) 
+                : base(sceneContext, position, symbol)
+        {
+            _health = health;
+        }
 
-        void IDamagable.TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             Health -= damage;
         }
+        //void IDamagable.TakeDamage(int damage)
+        //{
+        //    Health -= damage;
+        //}
     }
 }
