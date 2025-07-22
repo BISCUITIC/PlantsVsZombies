@@ -8,6 +8,8 @@ internal class Vector2i
     virtual public int X { get => _x; set => _x = value; }
     virtual public int Y { get => _y; set => _y = value; }
 
+    public static Vector2i Zero => new Vector2i(0, 0);
+
     public Vector2i()
     {
         X = 0;

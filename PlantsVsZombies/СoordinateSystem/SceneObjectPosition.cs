@@ -4,12 +4,12 @@ internal class SceneObjectPosition : Vector2i
 {
     private int _maxX;
     private int _maxY;
-    override public int X
+    public override int X
     {
         get => _x;
         set => _x = SetInBounders(value, 0, _maxX);
     }
-    override public int Y
+    public override int Y
     {
         get => _y;
         set => _y = SetInBounders(value, 0, _maxY);
@@ -18,17 +18,17 @@ internal class SceneObjectPosition : Vector2i
     private int SetInBounders(int checkableValue, int lowerBound, int upperBound)
     {
         if (checkableValue < lowerBound) return lowerBound;
-        if (checkableValue > upperBound) return upperBound;
+        if (checkableValue > upperBound - 1) return upperBound - 1;
         return checkableValue;
     }
 
 
     public SceneObjectPosition(int x, int y, int maxX, int maxY)
     {
-        X = x;
-        Y = y;
         _maxX = maxX;
         _maxY = maxY;
+        X = x;
+        Y = y;     
     }
 
     public SceneObjectPosition(int maxX, int maxY)

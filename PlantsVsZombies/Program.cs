@@ -10,6 +10,7 @@ internal class Program
 
         Scene scene = new Scene();
 
+        //Task.Delay(5000).Wait();
         while (scene.IsActive)
         {
             scene.Update();

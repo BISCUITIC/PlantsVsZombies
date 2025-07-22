@@ -1,9 +1,10 @@
 ﻿using PlantsVsZombies.Game;
+using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Abstractions
 {
-    abstract class GameObject : SceneObject
+    internal abstract class GameObject : SceneObject
     {
-        public GameObject(SceneContext sceneContext) : base(sceneContext) { }
+        public GameObject(SceneContext sceneContext, Vector2i position) : base(sceneContext, position) { }
     }
 }
