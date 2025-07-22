@@ -1,7 +1,7 @@
 ﻿using PlantsVsZombies.Abstractions;
 using PlantsVsZombies.Game;
 
-namespace PlantsVsZombies.Player;
+namespace PlantsVsZombies.User;
 
 internal class Cursor : SceneObject
 {
