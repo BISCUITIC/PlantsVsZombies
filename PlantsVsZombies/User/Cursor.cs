@@ -1,5 +1,6 @@
 ﻿using PlantsVsZombies.Abstractions;
 using PlantsVsZombies.Game;
+using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.User;
@@ -7,9 +8,9 @@ namespace PlantsVsZombies.User;
 internal class Cursor : SceneObject
 {
     private readonly PlayerInput _playerInput;
-    private const char _symbol = '*';
+    private const char _symbol = ':';
 
-    public Cursor(SceneContext sceneContext, Vector2i position, PlayerInput playerInput) : base(sceneContext, position)
+    public Cursor(IBoundsProvider bounds, Vector2i position, PlayerInput playerInput) : base(bounds, position)
     {
         _playerInput = playerInput;
     }

@@ -17,8 +17,8 @@ namespace PlantsVsZombies.Entities.Unites
             }
         }
 
-        protected Unit(SceneContext sceneContext, Vector2i position, char symbol, int health) 
-                : base(sceneContext, position, symbol)
+        protected Unit(IBoundsProvider bounds, Vector2i position, char symbol, int health) 
+                : base(bounds, position, symbol)
         {
             _health = health;
         }

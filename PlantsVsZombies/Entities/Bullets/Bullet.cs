@@ -1,5 +1,6 @@
 ﻿using PlantsVsZombies.Entities.Unites.Zombies;
 using PlantsVsZombies.Game;
+using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Bullets;
@@ -7,19 +8,22 @@ namespace PlantsVsZombies.Entities.Bullets;
 internal abstract class Bullet : Entity
 {
     protected int _damage;
+    protected IEnemyPoolProvider _enemyProvider;
     protected const int _speed = 1;
     public int Damage => _damage;
 
-    protected Bullet(SceneContext sceneContext, Vector2i position, char symbol, int damage)
-            : base(sceneContext, position, symbol)
+    protected Bullet(IBoundsProvider bounds, IEnemyPoolProvider enemyProvider, Vector2i position, char symbol, int damage)
+            : base(bounds, position, symbol)
     {
+        _enemyProvider = enemyProvider;
         _damage = damage;
     }
 
     public override void Update()
     {
-        Fly();
         CheckForCollision();
+        Fly();
+        CheckForCollision();       
     }
 
     protected virtual void Fly()
@@ -29,15 +33,20 @@ internal abstract class Bullet : Entity
 
     protected virtual void CheckForCollision()
     {
-        foreach(Entity entity in _sceneContext.ZombiesPool.Data)
+        if (Position.IsOnBound)
         {
-            Zombie zombie = (entity as Zombie) ?? throw new ArgumentException("Поле entity должно быть класса Zombie");
+            _isAlive = false;
+            return;
+        }
+        foreach (Zombie zombie in _enemyProvider.GetZombiesPool())
+        {            
             if (zombie.Position == Position)
             {                
                 zombie.TakeDamage(_damage);
                 _isAlive = false;
-                break;
+                return;
             }
+           
         }
     }
 }

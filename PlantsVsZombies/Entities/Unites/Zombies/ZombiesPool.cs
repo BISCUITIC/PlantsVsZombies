@@ -1,5 +1,13 @@
-﻿namespace PlantsVsZombies.Entities.Unites.Zombies;
+﻿using PlantsVsZombies.Interfaces;
+using System.Collections;
+using System.Runtime.InteropServices.ComTypes;
 
-internal class ZombiesPool : EntityPlenty
+namespace PlantsVsZombies.Entities.Unites.Zombies;
+
+internal class ZombiesPool : EntityPlenty<Zombie>, IEnemyPoolProvider
 {
+    public List<Zombie> GetZombiesPool()
+    {
+        return Data;
+    }
 }

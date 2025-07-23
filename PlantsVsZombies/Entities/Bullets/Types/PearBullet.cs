@@ -1,13 +1,13 @@
-﻿using PlantsVsZombies.Game;
+﻿using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Bullets.Types;
 
 internal class PearBullet : Bullet
 {
-    public PearBullet(SceneContext sceneContext, Vector2i position) 
-         : base(sceneContext, position, '-', 20)
+    public PearBullet(IBoundsProvider bounds, IEnemyPoolProvider enemyProvider, Vector2i position)
+         : base(bounds, enemyProvider, position, '-', 20)
     {
 
-    }       
+    }
 }

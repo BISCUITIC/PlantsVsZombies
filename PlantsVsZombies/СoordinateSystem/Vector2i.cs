@@ -5,8 +5,8 @@ internal class Vector2i
     protected int _x;
     protected int _y;
 
-    virtual public int X { get => _x; set => _x = value; }
-    virtual public int Y { get => _y; set => _y = value; }
+    public virtual int X { get => _x; set => _x = value; }
+    public virtual int Y { get => _y; set => _y = value; }
 
     public static Vector2i Zero => new Vector2i(0, 0);
 
@@ -20,4 +20,7 @@ internal class Vector2i
         X = x;
         Y = y;
     }
+
+    public static Vector2i operator -(Vector2i left, Vector2i right) { return new Vector2i(left.X - right.X, left.Y - right.Y); }
+    public static Vector2i operator +(Vector2i left, Vector2i right) { return new Vector2i(left.X + right.X, left.Y + right.Y); }    
 }
