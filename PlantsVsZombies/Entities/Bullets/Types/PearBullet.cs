@@ -1,4 +1,4 @@
-﻿using PlantsVsZombies.Interfaces;
+﻿using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Bullets.Types;
@@ -6,7 +6,7 @@ namespace PlantsVsZombies.Entities.Bullets.Types;
 internal class PearBullet : Bullet
 {
     public PearBullet(IBoundsProvider bounds, IEnemyPoolProvider enemyProvider, Vector2i position)
-         : base(bounds, enemyProvider, position, '-', 20)
+         : base(bounds, enemyProvider, position, '*', 20)
     {
 
     }

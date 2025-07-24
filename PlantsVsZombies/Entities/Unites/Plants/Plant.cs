@@ -1,22 +1,25 @@
 ﻿
 using PlantsVsZombies.Entities.Bullets;
 using PlantsVsZombies.Entities.Unites.Zombies;
+using PlantsVsZombies.Factories;
 using PlantsVsZombies.Game;
 using PlantsVsZombies.Interfaces;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Unites.Plants;
 
-internal abstract class Plant : Unit
+internal abstract class Plant : Unit, IShooter
 {
     protected bool _isEnemyDetected;
-    protected IBulletFactory _bulletFactory;
+    protected BulletFactory _bulletFactory;
     protected IBulletPoolProvider _bulletPool;
     protected IEnemyPoolProvider _enemyPoolProvider;
 
-    private const int _coolDown = 2;
+    private const int _shootCoolDown = 3;
     private int _deltaTicks;
-    protected Plant(IBoundsProvider bounds, IBulletFactory bulletFactory, IEnemyPoolProvider enemyPoolProvider,  IBulletPoolProvider bulletPool, Vector2i position, char symbol, int health)
+
+    protected Plant(IBoundsProvider bounds, BulletFactory bulletFactory, IEnemyPoolProvider enemyPoolProvider,  IBulletPoolProvider bulletPool, Vector2i position, char symbol, int health)
             : base(bounds, position, symbol, health)
     {
         _isEnemyDetected = false;
@@ -29,29 +32,34 @@ internal abstract class Plant : Unit
 
     public override void Update()
     {
-        DetectEnemy();
         _deltaTicks++;
-
-        if (_isEnemyDetected && _deltaTicks > _coolDown)
+        DetectEnemy();
+    
+        if (_isEnemyDetected && ShootCoolDownIsComplited())
         {
-            _deltaTicks = 0;
-            Shoot();
-            _isEnemyDetected = false;
+            Shoot();                  
         }
     }
 
-
-    public virtual void Shoot()
+    public void Shoot()
     {
-        _bulletPool.Add(_bulletFactory.CreateNewBullet());
+        _bulletFactory.CreateNew(_position.ToLocalCoordinates());
     }
+
+    public bool ShootCoolDownIsComplited()
+    {
+        if (_deltaTicks >= _shootCoolDown) { _deltaTicks = 0; return true; }
+        return false;
+    }
+
     public virtual void DetectEnemy()
     {
-        foreach(Zombie zombie in _enemyPoolProvider.GetZombiesPool())
+        _isEnemyDetected = false;
+        foreach (Zombie zombie in _enemyPoolProvider.Get())
         {
             if(zombie.Position.Y == Position.Y)
             {
-                _isEnemyDetected = true;
+                _isEnemyDetected = true;                
             }
         }
     }

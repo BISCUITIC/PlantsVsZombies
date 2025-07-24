@@ -1,6 +1,7 @@
 ﻿using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.Game;
 using PlantsVsZombies.СoordinateSystem;
+using PlantsVsZombies.Interfaces.Providers;
 
 namespace PlantsVsZombies.Abstractions;
 

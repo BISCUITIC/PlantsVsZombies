@@ -1,6 +1,6 @@
 ﻿using PlantsVsZombies.СoordinateSystem;
 
-namespace PlantsVsZombies.Interfaces;
+namespace PlantsVsZombies.Interfaces.Providers;
 
 internal interface IBoundsProvider
 {

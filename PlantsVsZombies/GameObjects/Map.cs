@@ -1,5 +1,5 @@
 ﻿using PlantsVsZombies.Abstractions;
-using PlantsVsZombies.Interfaces;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 using System.Drawing;
 

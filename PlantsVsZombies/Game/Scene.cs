@@ -6,6 +6,7 @@ using PlantsVsZombies.Entities.Unites.Zombies.Types;
 using PlantsVsZombies.Factories;
 using PlantsVsZombies.GameObjects;
 using PlantsVsZombies.Interfaces;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.User;
 using PlantsVsZombies.СoordinateSystem;
 
@@ -13,8 +14,7 @@ namespace PlantsVsZombies.Game;
 
 internal class Scene : IUpdatable, IDrawable, IBoundsProvider
 {
-    private Cursor _cursor;
-    private PlayerInput _playerInput;
+    private Player _player;
 
     private Vector2i _position;
     private Vector2i _size;
@@ -35,36 +35,30 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
         _position = new Vector2i(0, 0);
         _size = new Vector2i(Console.WindowWidth, Console.WindowHeight);
         
-        _map = new Map(this, new Vector2i(4, 2), new Vector2i(24, 3));
+        _map = new Map(this, new Vector2i(4, 2), new Vector2i(24, 16));
         _plants = new PlacedPlants();
         _bullets = new BulletsPool();
         _zombies = new ZombiesPool();
-        _waveGenerator = new WaveGenerator(_map, new SimpleZombieFactory(_plants), _zombies); 
+        _waveGenerator = new WaveGenerator(_map, new SimpleZombieFactory(_map, _plants, _zombies, GameOver), _zombies);
 
-        _playerInput = new PlayerInput();
-        _cursor = new Cursor(_map, Vector2i.Zero, _playerInput);
+        _player = new Player(_map, new List<PlantFactory> { new PearShooterFactory(_map, _bullets, _zombies, _plants)});
 
-        _plants.Add(new PearShooter(_map, _bullets, _zombies, new Vector2i(5, 1)));
-        //_zombies.Add(new SimpleZombie(_map, _plants, new Vector2i(14, 1)));
+        new PearShooterFactory(_map, _bullets, _zombies, _plants).CreateNew(new Vector2i(1,1));
     }
 
     public void Update()
     {
-        _playerInput.Update();
-        _cursor.Update();
+        _player.Update();        
 
         _map.Update();
         _plants.Update();
         _bullets.Update();
         _zombies.Update();     
         
-        _waveGenerator.Update();
-        //_sceneContext.Update();        
+        _waveGenerator.Update();           
     }
     public void Draw()
     {
-        //DrawUICommponents();
-        //DrawGameCommponents();
         Console.SetCursorPosition(0, 0);
         Console.Write($"Zombies Count: {_zombies.Data.Count}");
 
@@ -73,8 +67,7 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
         _bullets.Draw();
         _zombies.Draw();
 
-        _cursor.Draw();
-        //_sceneContext.Draw();        
+        _player.Draw();            
     }
 
     public Rect GetRect()
@@ -92,4 +85,11 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
         _zombiesWave.Draw();
         _plants.Draw();
     }*/
+
+    private void GameOver()
+    {
+        IsActive = false;
+        Console.SetCursorPosition(0, 20);
+        Console.WriteLine("Game Over");
+    }
 }

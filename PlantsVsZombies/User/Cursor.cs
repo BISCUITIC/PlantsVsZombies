@@ -1,6 +1,6 @@
 ﻿using PlantsVsZombies.Abstractions;
 using PlantsVsZombies.Game;
-using PlantsVsZombies.Interfaces;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.User;
@@ -17,8 +17,8 @@ internal class Cursor : SceneObject
 
     public override void Update()
     {
-        ConsoleKeyInfo key = _playerInput.GetLastPressedKey();
-        switch (key.Key)
+        ConsoleKeyInfo? key = _playerInput.GetLastPressedKey();
+        switch (key?.Key)
         {
             case ConsoleKey.W:
                 _position.Y -= 1;
@@ -31,6 +31,8 @@ internal class Cursor : SceneObject
                 break;
             case ConsoleKey.D:
                 _position.X += 1;
+                break;
+            case null:
                 break;
         }
     }

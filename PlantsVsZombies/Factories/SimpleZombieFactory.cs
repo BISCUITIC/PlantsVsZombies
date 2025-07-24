@@ -1,28 +1,20 @@
-﻿using PlantsVsZombies.Entities.Bullets;
-using PlantsVsZombies.Entities.Bullets.Types;
-using PlantsVsZombies.Entities.Unites.Zombies;
-using PlantsVsZombies.Entities.Unites.Zombies.Types;
-using PlantsVsZombies.Interfaces;
+﻿using PlantsVsZombies.Entities.Unites.Zombies.Types;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PlantsVsZombies.Factories
+namespace PlantsVsZombies.Factories;
+
+internal class SimpleZombieFactory : ZombieFactory
 {
-    internal class SimpleZombieFactory : IZombieFactory
-    {       
-        private readonly IPlantsPoolProvider _plant;
+    public SimpleZombieFactory(IBoundsProvider bounds, IPlantsPoolProvider plant, IEnemyPoolProvider enemyPool, Action? action)
+         : base(bounds, plant, enemyPool, action)
+    {
 
-        public SimpleZombieFactory(IPlantsPoolProvider plant)
-        {
-            _plant = plant;
-        }
-        public Zombie CreateNewZombie(IBoundsProvider bounds, Vector2i position)
-        {
-            return new SimpleZombie(bounds, _plant, position);
-        }
+    }
+    public override void CreateNew(Vector2i position)
+    {
+        SimpleZombie zombie = new SimpleZombie(Bounds, Plant, position);
+        zombie.AchivedEnd += AchivedEnd;
+        Enemies.Add(zombie);
     }
 }

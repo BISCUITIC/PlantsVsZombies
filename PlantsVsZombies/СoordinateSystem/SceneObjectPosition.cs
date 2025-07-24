@@ -39,6 +39,7 @@ internal class SceneObjectPosition : Vector2i
     }
     public SceneObjectPosition(int x, int y, Rect bounds) : this(new Vector2i(x, y), bounds) { }
 
+    public Vector2i ToLocalCoordinates() => new Vector2i(X, Y) - new Vector2i(_minX, _minY);
     public override string ToString() => $"X:{X}, Y:{Y}";
 
     public static bool operator ==(SceneObjectPosition left, SceneObjectPosition right) { return left.X == right.X && left.Y == right.Y; }

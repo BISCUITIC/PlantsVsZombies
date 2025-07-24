@@ -1,6 +1,6 @@
 ﻿using PlantsVsZombies.Abstractions;
 using PlantsVsZombies.Game;
-using PlantsVsZombies.Interfaces;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities;
@@ -26,4 +26,5 @@ internal abstract class Entity : GameObject
         Console.SetCursorPosition(_position.X, _position.Y);
         Console.Write(_symbol);
     }
+
 }

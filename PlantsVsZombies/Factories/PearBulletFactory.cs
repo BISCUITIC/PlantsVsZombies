@@ -1,23 +1,17 @@
-﻿using PlantsVsZombies.Entities.Bullets;
-using PlantsVsZombies.Entities.Bullets.Types;
-using PlantsVsZombies.Interfaces;
+﻿using PlantsVsZombies.Entities.Bullets.Types;
+using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Factories;
 
-internal class PearBulletFactory : IBulletFactory
+internal class PearBulletFactory : BulletFactory
 {
-    private readonly IBoundsProvider _bounds;
-    private readonly IEnemyPoolProvider _enemyProvider;
-    private readonly Vector2i _position;
-    public PearBulletFactory(IBoundsProvider bounds, IEnemyPoolProvider enemyProvider, Vector2i position)
+    public PearBulletFactory(IBoundsProvider bounds, IEnemyPoolProvider enemyProvider, IBulletPoolProvider bullets)
+         : base(bounds, enemyProvider, bullets)
     {
-        _bounds = bounds;
-        _enemyProvider = enemyProvider;
-        _position = position;
     }
-    public Bullet CreateNewBullet()
+    public override void CreateNew(Vector2i position)
     {
-        return new PearBullet(_bounds, _enemyProvider, _position);
+        Bullets.Add(new PearBullet(Bounds, EnemyProvider, position));
     }
 }

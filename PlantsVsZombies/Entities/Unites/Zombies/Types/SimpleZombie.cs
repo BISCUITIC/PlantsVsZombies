@@ -1,4 +1,4 @@
-﻿using PlantsVsZombies.Interfaces;
+﻿using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Unites.Zombies.Types

@@ -1,4 +1,5 @@
-﻿using PlantsVsZombies.Interfaces;
+﻿using PlantsVsZombies.Entities.Unites.Plants;
+using PlantsVsZombies.Interfaces;
 
 namespace PlantsVsZombies.Entities;
 
@@ -48,5 +49,10 @@ internal class EntityPlenty<T> : IUpdatable, IDrawable where T : Entity
         {
             entity.Draw();
         }
+    }
+
+    public IReadOnlyCollection<T> Get()
+    {
+        return Data;
     }
 }
