@@ -1,4 +1,5 @@
 ﻿
+using PlantsVsZombies.CoolDown;
 using PlantsVsZombies.Entities.Bullets;
 using PlantsVsZombies.Entities.Unites.Zombies;
 using PlantsVsZombies.Factories;
@@ -9,33 +10,29 @@ using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Unites.Plants;
 
-internal abstract class Plant : Unit, IShooter
+internal abstract class Plant : Unit
 {
-    protected bool _isEnemyDetected;
-    protected BulletFactory _bulletFactory;
-    protected IBulletPoolProvider _bulletPool;
-    protected IEnemyPoolProvider _enemyPoolProvider;
+    private bool _isEnemyDetected;
+    private BulletFactory _bulletFactory;    
+    private IEnemyPoolProvider _enemyPoolProvider;
+    private ICoolDown _shootCoolDown;   
 
-    private const int _shootCoolDown = 3;
-    private int _deltaTicks;
-
-    protected Plant(IBoundsProvider bounds, BulletFactory bulletFactory, IEnemyPoolProvider enemyPoolProvider,  IBulletPoolProvider bulletPool, Vector2i position, char symbol, int health)
+    protected Plant(IBoundsProvider bounds, BulletFactory bulletFactory, IEnemyPoolProvider enemyPoolProvider,  
+                    ICoolDown shootCoolDown,Vector2i position, char symbol, int health)
             : base(bounds, position, symbol, health)
     {
         _isEnemyDetected = false;
-        _bulletFactory = bulletFactory;
-        _bulletPool = bulletPool;
+        _bulletFactory = bulletFactory;        
         _enemyPoolProvider = enemyPoolProvider;
-        Health = health;
-        _deltaTicks = 0;
+        _shootCoolDown = shootCoolDown;
     }
 
     public override void Update()
     {
-        _deltaTicks++;
+        _shootCoolDown.Update();
         DetectEnemy();
     
-        if (_isEnemyDetected && ShootCoolDownIsComplited())
+        if (_isEnemyDetected && _shootCoolDown.IsReady())
         {
             Shoot();                  
         }
@@ -43,13 +40,7 @@ internal abstract class Plant : Unit, IShooter
 
     public void Shoot()
     {
-        _bulletFactory.CreateNew(_position.ToLocalCoordinates());
-    }
-
-    public bool ShootCoolDownIsComplited()
-    {
-        if (_deltaTicks >= _shootCoolDown) { _deltaTicks = 0; return true; }
-        return false;
+        _bulletFactory.CreateNew(Position.ToLocalCoordinates());
     }
 
     public virtual void DetectEnemy()

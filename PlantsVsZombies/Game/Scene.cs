@@ -60,7 +60,7 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
     public void Draw()
     {
         Console.SetCursorPosition(0, 0);
-        Console.Write($"Zombies Count: {_zombies.Data.Count}");
+        Console.Write($"Zombies Count: {_zombies.Get().Count}");
 
         _map.Draw();
         _plants.Draw();

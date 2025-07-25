@@ -74,7 +74,7 @@ internal class WaveGenerator : IUpdatable
 
     private bool PoolIsEmpty()
     {
-        return _pool.Data.Count == 0;
+        return _pool.Get().Count == 0;
     }
 
     private bool SpawnCoolDawnIsReady()

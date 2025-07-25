@@ -40,7 +40,7 @@ namespace PlantsVsZombies.GameObjects
 
         public Rect GetRect()
         {
-            return new Rect(_position, _size);
+            return new Rect(Position, _size);
         }
 
         public override void Update()
@@ -52,7 +52,7 @@ namespace PlantsVsZombies.GameObjects
         {
             for (int i = 0; i < _size.Y; i++)
             {
-                Console.SetCursorPosition(_position.X, _position.Y + i);
+                Console.SetCursorPosition(Position.X, Position.Y + i);
                 for (int j = 0; j < _size.X; j++)
                 {
                     Console.Write(_data[i, j]);

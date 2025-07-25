@@ -7,15 +7,16 @@ namespace PlantsVsZombies.Abstractions;
 
 internal abstract class SceneObject : IUpdatable, IDrawable
 {
-    protected IBoundsProvider _bounds;
-    protected SceneObjectPosition _position;
+    private IBoundsProvider _bounds;
+    private SceneObjectPosition _position;
+
     public SceneObjectPosition Position => _position;
+    protected IBoundsProvider Bounds => _bounds;
 
     public SceneObject(IBoundsProvider bounds, Vector2i position)
     {
         _bounds = bounds;
-        _position = new SceneObjectPosition(position, bounds.GetRect());
-        //Console.WriteLine(_position);
+        _position = new SceneObjectPosition(position, bounds.GetRect());        
     }
 
     public abstract void Update();

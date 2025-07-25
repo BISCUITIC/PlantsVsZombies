@@ -21,16 +21,16 @@ internal class Cursor : SceneObject
         switch (key?.Key)
         {
             case ConsoleKey.W:
-                _position.Y -= 1;
+                Position.Y -= 1;
                 break;
             case ConsoleKey.S:
-                _position.Y += 1;
+                Position.Y += 1;
                 break;
             case ConsoleKey.A:
-                _position.X -= 1;
+                Position.X -= 1;
                 break;
             case ConsoleKey.D:
-                _position.X += 1;
+                Position.X += 1;
                 break;
             case null:
                 break;
@@ -39,7 +39,7 @@ internal class Cursor : SceneObject
 
     public override void Draw()
     {
-        Console.SetCursorPosition(_position.X, _position.Y);
+        Console.SetCursorPosition(Position.X, Position.Y);
         Console.Write(_symbol);
     }
 

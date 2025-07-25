@@ -1,52 +1,46 @@
-﻿using PlantsVsZombies.Entities.Unites.Plants;
+﻿using PlantsVsZombies.CoolDown;
+using PlantsVsZombies.Entities.Unites.Plants;
 using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.Entities.Unites.Zombies;
 
-internal class Zombie : Unit, IMoveable
+internal class Zombie : Unit
 {
-    protected IPlantsPoolProvider _plants;
-    protected bool _canMove;    
-    protected bool _isAchivedEnd;
-    protected int _damage;    
+    private IPlantsPoolProvider _plants;
+    private ICoolDown _moveCoolDown;
+    private bool _canMove;
+    private bool _isAchivedEnd;
+    private int _damage;    
 
     public event Action? AchivedEnd;
 
-    private const int _moveCoolDown = 4;
-    private int _deltaTicks;
-
-    public Zombie(IBoundsProvider bounds, IPlantsPoolProvider plants, Vector2i position, char symbol, int health, int damage)
+    public Zombie(IBoundsProvider bounds, IPlantsPoolProvider plants, ICoolDown moveCoolDown, 
+                  Vector2i position, char symbol, int health, int damage)
          : base(bounds, position, symbol, health)
     {
         _canMove = true;
         _isAchivedEnd = false;
         _plants = plants;
         _damage = damage;
+        _moveCoolDown = moveCoolDown;
     }
     public override void Update()
     {
-        _deltaTicks++;
+        _moveCoolDown.Update();
 
         if (!_isAchivedEnd)
         {
             CheckForCollision();
-            if(_canMove && MoveCoolDownIsComplited()) Move();
+            if(_canMove && _moveCoolDown.IsReady()) Move();
         }
     }
 
-    public virtual void Move()
+    protected virtual void Move()
     {
         Position.X -= 1;
     }
-
-    public bool MoveCoolDownIsComplited()
-    {
-        if (_deltaTicks >= _moveCoolDown) { _deltaTicks = 0; return true; }
-        return false;
-    }
-
 
     protected virtual void CheckForCollision()
     {
@@ -68,7 +62,4 @@ internal class Zombie : Unit, IMoveable
             }
         }
     }
-
-
-
 }

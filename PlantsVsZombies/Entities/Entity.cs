@@ -7,9 +7,9 @@ namespace PlantsVsZombies.Entities;
 
 internal abstract class Entity : GameObject
 {
-    protected char _symbol;
-    protected bool _isAlive;
-    public bool IsAlive => _isAlive;
+    private char _symbol;
+    private bool _isAlive;
+    public bool IsAlive{ get => _isAlive; protected set => _isAlive = value; }
     
     protected Entity(IBoundsProvider bounds, Vector2i position, char symbol) 
             : base(bounds, position)
@@ -18,12 +18,10 @@ internal abstract class Entity : GameObject
         _symbol = symbol;
     }
 
-    public override void Update() {    }
-
     public override void Draw()
     {
         if (!_isAlive) return;
-        Console.SetCursorPosition(_position.X, _position.Y);
+        Console.SetCursorPosition(Position.X, Position.Y);
         Console.Write(_symbol);
     }
 

@@ -7,13 +7,13 @@ namespace PlantsVsZombies.Entities.Unites
 {
     internal abstract class Unit : Entity, IDamagable
     {
-        protected int _health;
-        public int Health
+        private int _health;
+        private int Health
         {
             get => _health;
             set
             {
-                if (value <= 0) _isAlive = false;
+                if (value <= 0) IsAlive = false;
                 else _health = value;
             }
         }
@@ -21,16 +21,12 @@ namespace PlantsVsZombies.Entities.Unites
         protected Unit(IBoundsProvider bounds, Vector2i position, char symbol, int health) 
                 : base(bounds, position, symbol)
         {
-            _health = health;
+            Health = health;
         }
 
         public void TakeDamage(int damage)
         {
             Health -= damage;
         }
-        //void IDamagable.TakeDamage(int damage)
-        //{
-        //    Health -= damage;
-        //}
     }
 }

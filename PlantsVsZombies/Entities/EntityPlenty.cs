@@ -5,12 +5,16 @@ namespace PlantsVsZombies.Entities;
 
 internal class EntityPlenty<T> : IUpdatable, IDrawable where T : Entity
 {
-    protected List<T> _data;
-    public List<T> Data { get => _data; }
+    private List<T> _data;    
 
     public EntityPlenty()
     {
         _data = new List<T>();
+    }
+
+    public IReadOnlyCollection<T> Get()
+    {
+        return _data;
     }
 
     public virtual void Add(T plant)
@@ -49,10 +53,5 @@ internal class EntityPlenty<T> : IUpdatable, IDrawable where T : Entity
         {
             entity.Draw();
         }
-    }
-
-    public IReadOnlyCollection<T> Get()
-    {
-        return Data;
-    }
+    } 
 }
