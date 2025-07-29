@@ -5,7 +5,7 @@ using PlantsVsZombies.Interfaces.Providers;
 
 namespace PlantsVsZombies.Abstractions;
 
-internal abstract class SceneObject : IUpdatable, IDrawable
+internal abstract class SceneObject : IDrawable
 {
     private IBoundsProvider _bounds;
     private SceneObjectPosition _position;
@@ -18,7 +18,6 @@ internal abstract class SceneObject : IUpdatable, IDrawable
         _bounds = bounds;
         _position = new SceneObjectPosition(position, bounds.GetRect());        
     }
-
-    public abstract void Update();
+    
     public abstract void Draw();
 }

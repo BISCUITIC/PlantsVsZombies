@@ -1,11 +1,12 @@
-﻿using PlantsVsZombies.Game;
+﻿using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
-namespace PlantsVsZombies.Abstractions
+namespace PlantsVsZombies.Abstractions;
+
+internal abstract class GameObject : SceneObject, IUpdatable
 {
-    internal abstract class GameObject : SceneObject
-    {
-        public GameObject(IBoundsProvider bounds, Vector2i position) : base(bounds, position) { }
-    }
+    public GameObject(IBoundsProvider bounds, Vector2i position) : base(bounds, position) { }
+
+    public abstract void Update();
 }

@@ -67,7 +67,7 @@ internal class WaveGenerator : IUpdatable
         {
             Vector2i position = new Vector2i(_bounds.GetRect().Size.X - 2,
                                              _random.Next(1, _bounds.GetRect().Size.Y - 2));
-            _zombieFactory.CreateNew(position);
+            _zombieFactory.AddNewObjectAtPool(position);
         }
         _zombieCountInWave -= _zombiesCountInChank;
     }

@@ -5,7 +5,9 @@ namespace PlantsVsZombies.Entities;
 
 internal class EntityPlenty<T> : IUpdatable, IDrawable where T : Entity
 {
-    private List<T> _data;    
+    private List<T> _data;
+    public event Action<int>? ChangeCount;
+    
 
     public EntityPlenty()
     {
@@ -17,20 +19,22 @@ internal class EntityPlenty<T> : IUpdatable, IDrawable where T : Entity
         return _data;
     }
 
-    public virtual void Add(T plant)
+    public void Add(T plant)
     {
         _data.Add(plant);
+        ChangeCount?.Invoke(_data.Count);
     }
 
-    public virtual void Remove(List<T> removeList)
+    public void Remove(List<T> removeList)
     {
         foreach (T item in removeList)
         {
             _data.Remove(item);
         }
+        ChangeCount?.Invoke(_data.Count);
     }
 
-    public virtual void Update()
+    public void Update()
     {
         List<T> removeList = new List<T>();
         foreach (T? entity in _data)
@@ -47,7 +51,7 @@ internal class EntityPlenty<T> : IUpdatable, IDrawable where T : Entity
         Remove(removeList);
     }
 
-    public virtual void Draw()
+    public void Draw()
     {
         foreach (T entity in _data)
         {

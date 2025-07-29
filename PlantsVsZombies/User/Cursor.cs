@@ -1,11 +1,12 @@
 ﻿using PlantsVsZombies.Abstractions;
 using PlantsVsZombies.Game;
+using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.Interfaces.Providers;
 using PlantsVsZombies.СoordinateSystem;
 
 namespace PlantsVsZombies.User;
 
-internal class Cursor : SceneObject
+internal class Cursor : SceneObject, IUpdatable
 {
     private readonly PlayerInput _playerInput;
     private const char _symbol = ':';
@@ -15,7 +16,7 @@ internal class Cursor : SceneObject
         _playerInput = playerInput;
     }
 
-    public override void Update()
+    public void Update()
     {
         ConsoleKeyInfo? key = _playerInput.GetLastPressedKey();
         switch (key?.Key)

@@ -11,7 +11,7 @@ internal class SimpleZombieFactory : ZombieFactory
     {
 
     }
-    public override void CreateNew(Vector2i position)
+    public override void AddNewObjectAtPool(Vector2i position)
     {
         SimpleZombie zombie = new SimpleZombie(Bounds, Plant, position);
         zombie.AchivedEnd += AchivedEnd;

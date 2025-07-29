@@ -24,20 +24,19 @@ internal abstract class Bullet : Entity
     }
 
     public override void Update()
-    {
-        
+    {        
         CheckForCollision();
         _moveCoolDown.Update();
         if (_moveCoolDown.IsReady()) Move();
         CheckForCollision();       
     }
 
-    protected virtual void Move()
+    private void Move()
     {
         Position.X += 1;
     }
 
-    protected virtual void CheckForCollision()
+    private void CheckForCollision()
     {
         if (Position.IsOnBound)
         {
@@ -51,8 +50,7 @@ internal abstract class Bullet : Entity
                 zombie.TakeDamage(_damage);
                 IsAlive = false;
                 return;
-            }
-           
+            }           
         }
     }
 }

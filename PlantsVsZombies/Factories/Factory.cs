@@ -4,5 +4,5 @@ namespace PlantsVsZombies.Factories;
 
 abstract class Factory
 {
-    public abstract void CreateNew(Vector2i position);
+    public abstract void AddNewObjectAtPool(Vector2i position);
 }

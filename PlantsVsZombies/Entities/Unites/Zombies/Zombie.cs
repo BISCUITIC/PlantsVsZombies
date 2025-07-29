@@ -37,12 +37,12 @@ internal class Zombie : Unit
         }
     }
 
-    protected virtual void Move()
+    private void Move()
     {
         Position.X -= 1;
     }
 
-    protected virtual void CheckForCollision()
+    private void CheckForCollision()
     {
         _canMove = true;
         if (Position.IsOnBound)

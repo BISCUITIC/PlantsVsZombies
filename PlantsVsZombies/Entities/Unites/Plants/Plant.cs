@@ -38,12 +38,12 @@ internal abstract class Plant : Unit
         }
     }
 
-    public void Shoot()
+    private void Shoot()
     {
-        _bulletFactory.CreateNew(Position.ToLocalCoordinates());
+        _bulletFactory.AddNewObjectAtPool(Position.ToLocalCoordinates());
     }
 
-    public virtual void DetectEnemy()
+    private void DetectEnemy()
     {
         _isEnemyDetected = false;
         foreach (Zombie zombie in _enemyPoolProvider.Get())

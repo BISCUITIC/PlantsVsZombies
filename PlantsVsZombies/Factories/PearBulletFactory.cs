@@ -10,7 +10,7 @@ internal class PearBulletFactory : BulletFactory
          : base(bounds, enemyProvider, bullets)
     {
     }
-    public override void CreateNew(Vector2i position)
+    public override void AddNewObjectAtPool(Vector2i position)
     {
         Bullets.Add(new PearBullet(Bounds, EnemyProvider, position));
     }

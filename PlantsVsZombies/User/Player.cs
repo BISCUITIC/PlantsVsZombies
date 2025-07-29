@@ -28,7 +28,7 @@ internal class Player: IUpdatable, IDrawable
         if (IsKeyInputValid())
         {
             int index = GetIndex();            
-            _plantsFactories[index].CreateNew(_cursor.Position.ToLocalCoordinates());
+            _plantsFactories[index].AddNewObjectAtPool(_cursor.Position.ToLocalCoordinates());
         }
     }
 

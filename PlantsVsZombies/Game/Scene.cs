@@ -7,6 +7,7 @@ using PlantsVsZombies.Factories;
 using PlantsVsZombies.GameObjects;
 using PlantsVsZombies.Interfaces;
 using PlantsVsZombies.Interfaces.Providers;
+using PlantsVsZombies.UI;
 using PlantsVsZombies.User;
 using PlantsVsZombies.СoordinateSystem;
 
@@ -26,6 +27,7 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
     private WaveGenerator _waveGenerator;
 
     //private ScorePanel _scorePanle;
+    private ZombiesCountPanel _zombiesCountPanel;
 
     public bool IsActive { get; set; }
 
@@ -43,7 +45,15 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
 
         _player = new Player(_map, new List<PlantFactory> { new PearShooterFactory(_map, _bullets, _zombies, _plants)});
 
-        new PearShooterFactory(_map, _bullets, _zombies, _plants).CreateNew(new Vector2i(1,1));
+        //new PearShooterFactory(_map, _bullets, _zombies, _plants).AddNewObjectAtPool(new Vector2i(1,1));
+        _zombiesCountPanel = new ZombiesCountPanel(this, new Vector2i(0, 0));
+
+        OnEnable();
+    }
+
+    private void OnEnable()
+    {
+        _zombies.ChangeCount += _zombiesCountPanel.ChangeValue;
     }
 
     public void Update()
@@ -59,8 +69,7 @@ internal class Scene : IUpdatable, IDrawable, IBoundsProvider
     }
     public void Draw()
     {
-        Console.SetCursorPosition(0, 0);
-        Console.Write($"Zombies Count: {_zombies.Get().Count}");
+        _zombiesCountPanel.Draw();
 
         _map.Draw();
         _plants.Draw();

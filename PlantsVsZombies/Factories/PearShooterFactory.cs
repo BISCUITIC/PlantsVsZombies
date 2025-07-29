@@ -11,7 +11,7 @@ internal class PearShooterFactory : PlantFactory
     {
     }
 
-    public override void CreateNew(Vector2i position)
+    public override void AddNewObjectAtPool(Vector2i position)
     {
         PlantsPool.Add(new PearShooter(Bound, BulletPool, EnemyPool, position));
     }
